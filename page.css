@@ -1,0 +1,240 @@
+/* ======================
+   全局重置与变量
+====================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 亮色主题 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --card-bg: #ffffff;
+  --accent: #3b82f6;
+  --success: #10b981;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 暗黑模式变量 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border-color: #334155;
+    --card-bg: #1e293b;
+    --accent: #60a5fa;
+    --success: #34d399;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* 使用 flow-root 创建 BFC，包含子元素（如未来有浮动） */
+.page-container {
+  display: flow-root;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* ======================
+   头部区域
+====================== */
+
+.hero {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 社交图标：使用子选择器 + 伪类 */
+.social-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.social-links > li {
+  display: inline-block;
+}
+
+.social-links a {
+  display: block;
+  color: var(--text-secondary);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.social-links a:hover {
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  fill: currentColor; /* 继承父级 color */
+}
+
+/* ======================
+   作品网格（Grid 布局）
+====================== */
+
+.projects-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* 移动端：1列 */
+.project-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  /* 入场动画 */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* 第二个项目延迟入场 */
+.project-card:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+/* 徽章（绝对定位） */
+.badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--success);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.project-card h2 {
+  font-size: 1.375rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.project-card p {
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* 按钮：使用 transition */
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+}
+.btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* 平板及以上：2列 */
+@media (min-width: 600px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 桌面：保持2列但间距更大 */
+@media (min-width: 900px) {
+  .projects-grid {
+    gap: 2rem;
+  }
+}
+
+/* ======================
+   页脚
+====================== */
+
+.footer {
+  text-align: center;
+  padding: 1.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ======================
+   动画定义
+====================== */
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================
+   无障碍与性能
+====================== */
+
+/* 减少动画用户 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 焦点可见（键盘导航） */
+a:focus, button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
